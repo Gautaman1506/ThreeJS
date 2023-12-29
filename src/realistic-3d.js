@@ -39,6 +39,27 @@ const orbit = new OrbitControls(camera, renderer.domElement);
 camera.position.set(0, 0, 7);
 orbit.update();
 
+const loadingManager = new THREE.LoadingManager();
+
+const progressBar = document.getElementById('progress-bar');
+
+let loadingCounter = 0;
+
+loadingManager.onProgress = function (url, loaded, total) {
+  setTimeout(() => {
+    loadingCounter += 1000;
+    progressBar.value = (loaded / total) * 100;
+  }, loadingCounter);
+};
+
+const progressBarContainer = document.querySelector('.progress-bar-container');
+
+loadingManager.onLoad = function () {
+  setTimeout(() => {
+    progressBarContainer.style.display = 'none';
+  }, loadingCounter + 1000);
+};
+
 // renderer.outputEncoding = THREE.sRGBEncoding;
 
 // tone mapping - adjust image tone to get better image results
@@ -49,7 +70,7 @@ renderer.toneMappingExposure = 1.8;
 
 // creating instance of rgbe loader
 // callback function
-const rgbeLoader = new RGBELoader();
+const rgbeLoader = new RGBELoader(loadingManager);
 rgbeLoader.load(kitchenHDR, (texture) => {
   texture.mapping = THREE.EquirectangularReflectionMapping;
   scene.background = texture;
