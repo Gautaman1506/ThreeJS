@@ -5,14 +5,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx parcel ./src/index.html",
-    "build": "npx parcel build ./src/index.html",
-    "deploy": "gh-pages -d dist"
+    "build": "npx parcel build ./src/index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gh-pages": "^6.1.0",
     "parcel": "^2.10.3",
     "three": "^0.158.0"
   },
